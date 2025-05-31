@@ -1,0 +1,757 @@
+# Import Module
+from tkinter import *
+import time
+from main import*
+from threading import *
+from playsound import playsound
+
+# Create Object
+root = Tk()
+
+# Set geometry
+root.geometry("1366x768")
+root.iconbitmap("2.ico")
+root.configure(background="orange");
+root.title("Business Pedia")
+lb1=Label(root,text="WELCOME TO BUSINESS PEDIA",bg="red",fg="white",font=("elephant",40))
+
+lb2=Label(root,text="BUSI",bg="black",fg="white",font=("elephant",35))
+lb3=Label(root,text="NE",bg="black",fg="white",font=("elephant",35))
+lb4=Label(root,text="SS",bg="black",fg="white",font=("elephant",35))
+
+lb5=Label(root,text="Encyclopedia",bg="black",fg="white",font=("elephant",35))
+
+# use threading
+
+def threading():
+	# Call work function
+	t1=Thread(target=work)
+	t1.start()
+
+# work function
+def work():
+    #playsound('Alarm04.wav')
+    time.sleep(1)
+    lb1.place(x=170,y=40)
+
+    time.sleep(.5)
+    lb2.place(x=220,y=280)
+    time.sleep(.5)
+
+    lb3.place(x=380,y=280)
+
+    time.sleep(.5)
+
+    lb4.place(x=480,y=280)
+    time.sleep(.5)
+
+    lb5.place(x=580,y=280)
+
+    time.sleep(3)
+    start()
+
+# Create Button
+threading()
+# Execute Tkinter
+
+
+root.mainloop()
+
+from deletebiz import*
+from BusinessPedia.updatebiz import*
+from bizinsert import*
+from adminmain import*
+from usermain import*
+import mysql.connector
+from tkinter import messagebox
+
+
+def start():
+
+    def login():
+
+        def logincheck1():
+            #fetch user and password from  tkinter form
+            name=ename.get()
+            passw=epass.get()
+
+            check=False
+            #fetch data from mysql table
+
+            con = mysql.connector.connect(host="localhost",
+                                          user="root",
+                                          passwd="1234",
+                                          database="businessdb")
+            if (con):
+                print("connection done")
+                cur = con.cursor();
+                qry = "select *from users where usertype='user'"
+                cur.execute(qry)
+
+                Mrows = cur.fetchall()
+                con.commit()
+
+                for row in Mrows:
+                    print("Username:",row[1],"Userpass:",row[2])
+
+                    if name == row[1] and passw==row[2] :
+                            check=True
+                            mw.wm_withdraw()
+                            usercont()
+                            con.close()
+                            break
+                   # print(cur.rowcount, "Student Data Selected")
+                if(check==False):
+                    messagebox.showinfo("ErrorMsg", "Invalid username or password")
+
+                cur.close()
+                con.close()
+            else:
+                print("Connection failed")
+
+            #-----------------------
+
+        def logincheck2():
+            #fetch user and password from  tkinter form
+            name=ename.get()
+            passw=epass.get()
+
+            check=False
+            #fetch data from mysql table
+
+            con = mysql.connector.connect(host="localhost",
+                                          user="root",
+                                          passwd="1234",
+                                          database="businessdb")
+            if (con):
+                print("connection done")
+                cur = con.cursor();
+                qry = "select *from users where usertype='admin'"
+                cur.execute(qry)
+
+                Mrows = cur.fetchall()
+                con.commit()
+
+                for row in Mrows:
+                    print("Username:",row[1],"Userpass:",row[2])
+
+                    if name == row[1] and passw==row[2] :
+                            check=True
+                            mw.wm_withdraw()
+                            admincont()
+                            con.close()
+                            break
+                   # print(cur.rowcount, "Student Data Selected")
+                if(check==False):
+                    messagebox.showinfo("ErrorMsg", "Invalid username or password")
+
+                cur.close()
+                con.close()
+            else:
+                print("Connection failed")
+
+        mw=Tk()
+        mw.iconbitmap("123.ico")
+        mw.geometry("600x400+400+200")
+        mw.title("Business Pedia Login")
+        mw.configure(background="grey");
+
+        lbl1=Label(mw,text="User Name",font="Elephant 15",width=10);
+        lbl2=Label(mw,text="User Pasword",font="Elephant 15",width=10);
+        ename=Entry(mw,font="Elephant 15",width=15)
+        epass=Entry(mw,show="*",font="Elephant 15",width=15)
+        loginbtn1=Button(mw,text="User login",command=logincheck1,font="Elephant 10",width=20)
+        loginbtn2= Button(mw, text="Admin login", command=logincheck2,font="Elephant 10",width=20)
+
+        regbtn=Button(mw,text="Register",command=insfunreg,font="Elephant 10",width=20)
+        lbl1.grid(row=1,column=1,padx=20,pady=40)
+        ename.grid(row=1,column=2,padx=40,pady=40)
+        lbl2.grid(row=2, column=1,padx=39,pady=40)
+        epass.grid(row=2, column=2,padx=40,pady=40)
+        loginbtn1.grid(row=3,column=1,padx=40,pady=2)
+        loginbtn2.grid(row=4, column=1,padx=40,pady=2)
+
+        regbtn.grid(row=5,column=1,padx=40,pady=2)
+        mw.mainloop()
+
+    login()
+from adminmain import*
+from usermain import*
+from aboutus import*
+from bizinsert import*
+from updatebiz import*;
+from deletebiz import*
+from register import*
+from aboutus import*
+
+def insertfun():
+    pass
+
+def adminhelp():
+    pass
+def copyright():
+    pass
+def changepass():
+    print("change pass called")
+def admincont():
+    def donothing():
+        filewin = Toplevel(root)
+        button = Button(filewin, text="Do nothing button")
+        button.pack()
+
+
+    root = Tk()
+    root.iconbitmap("123.ico")
+    root.configure(background="red");
+
+    root.geometry("500x500+400+200");
+    root.title("Admin Control Window")
+
+    imglbl=Label(root,text="WELCOME",font="forte 20",width=100);
+
+
+    menubar = Menu(root)
+
+    filemenu = Menu(menubar, tearoff=0)
+    filemenu.add_command(label="Change Password", command=changepass)
+    filemenu.add_command(label="Register User", command=insfunreg)
+
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=root.quit)
+    menubar.add_cascade(label="Admin", menu=filemenu)
+
+    msmenu = Menu(menubar, tearoff=0)
+    msmenu.add_command(label="insert", command=donothing)
+
+    editmenu = Menu(menubar, tearoff=0)
+    editmenu.add_command(label="Add New", command=bizinsertfun)
+
+    editmenu.add_command(label="Search", command=titlesearch)
+
+    editmenu.add_separator()
+
+    editmenu.add_command(label="Update", command=bizupdatefun)
+    editmenu.add_command(label="Delete", command=bizdeletefun)
+
+    menubar.add_cascade(label="Business", menu=editmenu)
+    helpmenu = Menu(menubar, tearoff=0)
+    helpmenu.add_command(label="About Project", command=aboutfun)
+    helpmenu.add_command(label="CopyRight", command=aboutfun)
+    menubar.add_cascade(label="Help", menu=aboutfun)
+
+    root.config(menu=menubar)
+    imglbl.place(anchor=S)
+    imglbl.pack()
+    root.mainloop()
+from serachbiz import*
+from register import*
+
+
+def usercont():
+    def donothing():
+        filewin = Toplevel(root)
+        button = Button(filewin, text="Do nothing button")
+        button.pack()
+
+
+    root = Tk()
+
+    root.iconbitmap("123.ico")
+    root.configure(background="red");
+
+    imglbl=Label(root,text="WELCOME",font="forte 20",width=100);
+
+
+    root.geometry("500x400+200+100");
+    root.title("user Control Window");
+
+    menubar = Menu(root)
+    filemenu = Menu(menubar, tearoff=0)
+    filemenu.add_command(label="Change Password", command=donothing)
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=root.quit)
+    menubar.add_cascade(label="User", menu=filemenu)
+
+    editmenu = Menu(menubar, tearoff=0)
+    editmenu.add_command(label="Search Business", command=titlesearch)
+
+    editmenu.add_separator()
+
+    editmenu.add_command(label="Search Person", command=personsearch)
+    editmenu.add_command(label="Search Company", command=companysearch)
+
+    menubar.add_cascade(label="Search", menu=editmenu)
+
+    root.config(menu=menubar)
+    imglbl.pack()
+    root.mainloop()
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+
+def bizinsertfun():
+    def insert():
+        intitle =titlee.get()
+        incom=come.get()
+        inperson=persone.get()
+        inweb=webe.get()
+        indetail = detaile.get()
+        con = mysql.connector.connect(host="localhost",
+                                      user="root",
+                                      passwd="1234",
+                                      database="businessdb")
+        if (con):
+            cur = con.cursor(prepared=True);
+            pre_qry = "insert into bizpedia(title,company,person,website,detail) values(%s,%s,%s,%s,%s)"
+            cur.execute(pre_qry, (intitle,incom,inperson,inweb,indetail))
+            con.commit();
+
+            messagebox.showinfo("Insert info", "Row inserted successfully")
+
+    inswin=Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+
+
+    inswin.title("Add New Business");
+
+    inswin.geometry("600x400+300+200");
+    titlelbl = Label(inswin, text="Enter Title:",font="elephant 12");
+    comlbl = Label(inswin, text="Enter Compnany name:",font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person:",font="elephant 12")
+    weblbl = Label(inswin, text="Enter website:",font="elephant 12")
+
+    detaillbl = Label(inswin, text="Enter Business Detail:",font="elephant 12")
+
+    titlee = Entry(inswin,font="elephant 12");
+    come = Entry(inswin,font="elephant 12");
+    persone = Entry(inswin,font="elephant 12");
+    webe = Entry(inswin,font="elephant 12");
+
+    detaile = Entry(inswin,font="elephant 12");
+    titlelbl.grid(row=0, column=1)
+    titlee.grid(row=0, column=2)
+    comlbl.grid(row=1, column=1)
+    come.grid(row=1, column=2)
+    personlbl.grid(row=2, column=1)
+    persone.grid(row=2, column=2)
+    weblbl.grid(row=3, column=1)
+    webe.grid(row=3, column=2)
+    detaillbl.grid(row=4, column=1)
+    detaile.grid(row=4, column=2)
+
+    btn=Button(inswin,text="insertData",command=insert)
+    btn.grid(row=20,column=30)
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+def personsearch():
+    pass
+def companysearch():
+    pass
+def titlesearch():
+    def clearall():
+        ide.delete(0,END)
+        titlee.delete(0,END)
+        come.delete(0,END)
+        persone.delete(0,END)
+        webe.delete(0, END)
+        detaile.delete(0,END)
+
+    def search():
+
+        check = False
+        inid=ide.get()
+        intitle = titlee.get()
+        incom = come.get()
+        inperson = persone.get()
+        inweb = webe.get()
+        indetail = detaile.get()
+
+        con = mysql.connector.connect(host="localhost",
+                                      user="root",
+                                      passwd="1234",
+                                      database="businessdb")
+        if (con):
+            print("connection done")
+            cur = con.cursor();
+            qry = "select *from bizpedia"
+            cur.execute(qry)
+
+            Mrows = cur.fetchall()
+            con.commit()
+            if inid=="":
+                inid=0
+            for row in Mrows:
+           #     print("name:", row[0], "gender:", row[1],"and id=",inid)
+
+                if int(inid) ==row[0] or intitle==row[1] or incom==row[2] or inperson==row[3] or inweb==row[4]:
+                    check = True
+                    ide.delete(0, END)
+                    titlee.delete(0, END)
+                    come.delete(0, END)
+                    persone.delete(0, END)
+                    webe.delete(0, END)
+                    detaile.delete(0, END)
+
+                    ide.insert(0,row[0])
+                    titlee.insert(0,row[1])
+                    come.insert(0,row[2])
+                    persone.insert(0,row[3])
+                    webe.insert(0,row[4])
+                    detaile.insert(0,row[5])
+                    con.close()
+                    break
+            if (check == False):
+                messagebox.showinfo("ErrorMsg", "Invalid Detail")
+
+            cur.close()
+            con.close()
+        else:
+            print("Connection failed")
+
+    inswin = Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+    inswin.title("Search Business");
+
+    inswin.geometry("800x400+300+200");
+    idlbl = Label(inswin, text="Enter Id for search:", font="elephant 12");
+
+    titlelbl = Label(inswin, text="Enter Title for search:", font="elephant 12");
+    comlbl = Label(inswin, text="Enter Compnany name for search:", font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person name for search:", font="elephant 12")
+    weblbl = Label(inswin, text="Enter website name for search:", font="elephant 12")
+
+    detaillbl = Label(inswin, text="Business Detail:", font="elephant 12")
+
+    titlee = Entry(inswin, font="elephant 12");
+    come = Entry(inswin, font="elephant 12");
+    persone = Entry(inswin, font="elephant 12");
+    webe = Entry(inswin, font="elephant 12");
+    ide = Entry(inswin, font="elephant 12");
+
+    detaile = Entry(inswin, font="elephant 12");
+    titlelbl.grid(row=1, column=1)
+    titlee.grid(row=1, column=2)
+    comlbl.grid(row=2, column=1)
+    come.grid(row=2, column=2)
+    personlbl.grid(row=3, column=1)
+    persone.grid(row=3, column=2)
+    weblbl.grid(row=4, column=1)
+    webe.grid(row=4, column=2)
+    detaillbl.grid(row=5, column=1)
+    detaile.grid(row=5, column=2)
+    idlbl.grid(row=0, column=1)
+    ide.grid(row=0, column=2)
+
+    btn = Button(inswin, text="searchData", command=search)
+    btn.grid(row=20, column=10)
+    btn = Button(inswin, text="clearData", command=clearall)
+    btn.grid(row=20, column=15)
+from tkinter import *
+import mysql.connector
+from tkinter import messagebox
+
+
+def bizupdatefun():
+    def searchf():
+
+        check = False
+        inid = ide.get()
+        intitle = titlee.get()
+        incom = come.get()
+        inperson = persone.get()
+        inweb = webe.get()
+        indetail = detaile.get()
+
+        con = mysql.connector.connect(host="localhost",
+                                      user="root",
+                                      passwd="1234",
+                                      database="businessdb")
+        if (con):
+            print("connection done")
+            cur = con.cursor();
+            qry = "select *from bizpedia"
+            cur.execute(qry)
+
+            Mrows = cur.fetchall()
+            con.commit()
+
+            for row in Mrows:
+                #     print("name:", row[0], "gender:", row[1],"and id=",inid)
+
+                if int(inid) == row[0] or intitle == row[1] or incom == row[2] or inperson == row[3] or inweb == \
+                        row[4]:
+                    check = True
+                    ide.delete(0, END)
+                    titlee.delete(0, END)
+                    come.delete(0, END)
+                    persone.delete(0, END)
+                    webe.delete(0, END)
+                    detaile.delete(0, END)
+
+                    ide.insert(0, row[0])
+                    titlee.insert(0, row[1])
+                    come.insert(0, row[2])
+                    persone.insert(0, row[3])
+                    webe.insert(0, row[4])
+                    detaile.insert(0, row[5])
+                    con.close()
+                    break
+            if (check == False):
+                messagebox.showinfo("ErrorMsg", "Invalid Detail")
+
+            cur.close()
+            con.close()
+
+    def updatef():
+
+        inid=ide.get()
+        intitle = titlee.get()
+        incom = come.get()
+        inperson = persone.get()
+        inweb = webe.get()
+        indetail = detaile.get()
+        con = mysql.connector.connect(host="localhost",
+                                      user="root",
+                                      passwd="1234",
+                                      database="businessdb")
+        if (con):
+            cur = con.cursor(prepared=True);
+            pre_qry = "update bizpedia set title=%s,company=%s,person=%s,website=%s,detail=%s where id=%s or title=%s"
+
+
+            cur.execute(pre_qry, (intitle, incom, inperson, inweb, indetail,inid,intitle))
+            con.commit();
+
+            messagebox.showinfo("update info", "record update successfully")
+
+    inswin = Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+    inswin.title("Update Business");
+
+    inswin.geometry("800x400+300+200");
+    idlbl = Label(inswin, text="Enter Id for search:", font="elephant 12");
+
+    titlelbl = Label(inswin, text="Enter new Title:", font="elephant 12");
+    comlbl = Label(inswin, text="Enter new Compnany name:", font="elephant 12")
+    personlbl = Label(inswin, text="Enter new Person:", font="elephant 12")
+    weblbl = Label(inswin, text="Enter new website:", font="elephant 12")
+
+    detaillbl = Label(inswin, text="Enter New Business Detail:", font="elephant 12")
+
+    titlee = Entry(inswin, font="elephant 12");
+    come = Entry(inswin, font="elephant 12");
+    persone = Entry(inswin, font="elephant 12");
+    webe = Entry(inswin, font="elephant 12");
+    ide = Entry(inswin, font="elephant 12");
+
+    detaile = Entry(inswin, font="elephant 12");
+    titlelbl.grid(row=1, column=1)
+    titlee.grid(row=1, column=2)
+    comlbl.grid(row=2, column=1)
+    come.grid(row=2, column=2)
+    personlbl.grid(row=3, column=1)
+    persone.grid(row=3, column=2)
+    weblbl.grid(row=4, column=1)
+    webe.grid(row=4, column=2)
+    detaillbl.grid(row=5, column=1)
+    detaile.grid(row=5, column=2)
+    idlbl.grid(row=0, column=1)
+    ide.grid(row=0, column=2)
+
+    btn1 = Button(inswin, text="searchData", command=searchf)
+
+    btn2 = Button(inswin, text="updateData", command=updatef)
+
+    btn1.grid(row=20, column=20)
+    btn2.grid(row=20, column=30)
+from tkinter import *
+import mysql.connector
+from tkinter import messagebox
+
+
+def bizdeletefun():
+    def deletef():
+        inid=ide.get()
+        intitle = titlee.get()
+        incom = come.get()
+        inperson = persone.get()
+        inweb = webe.get()
+        con = mysql.connector.connect(host="localhost",
+                                      user="root",
+                                      passwd="1234",
+                                      database="businessdb")
+        if (con):
+            cur = con.cursor(prepared=True);
+            pre_qry = "delete from bizpedia where id=%s or title=%s or company=%s or person=%s or website=%s"
+
+
+            cur.execute(pre_qry, (inid,intitle, incom, inperson, inweb))
+            con.commit();
+
+            messagebox.showinfo("delete info", "record delete successfully")
+
+    inswin = Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+    inswin.title("Update Business");
+
+    inswin.geometry("600x400+300+200");
+    idlbl = Label(inswin, text="Enter Id for delete:", font="elephant 12");
+
+    titlelbl = Label(inswin, text="Enter Title for delete:", font="elephant 12");
+    comlbl = Label(inswin, text="Enter Compnany name for delete:", font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person name for delete:", font="elephant 12")
+    weblbl = Label(inswin, text="Enter  website for delete:", font="elephant 12")
+
+
+    titlee = Entry(inswin, font="elephant 12");
+    come = Entry(inswin, font="elephant 12");
+    persone = Entry(inswin, font="elephant 12");
+    webe = Entry(inswin, font="elephant 12");
+    ide = Entry(inswin, font="elephant 12");
+
+    titlelbl.grid(row=1, column=1)
+    titlee.grid(row=1, column=2)
+    comlbl.grid(row=2, column=1)
+    come.grid(row=2, column=2)
+    personlbl.grid(row=3, column=1)
+    persone.grid(row=3, column=2)
+    weblbl.grid(row=4, column=1)
+    webe.grid(row=4, column=2)
+    idlbl.grid(row=0, column=1)
+    ide.grid(row=0, column=2)
+
+    btn = Button(inswin, text="updateData", command=deletef)
+    btn.grid(row=20, column=30)
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+
+def insfunreg():
+    def insert():
+        inname =ename.get()
+        inpass=epass.get()
+        intype=etype.get()
+        con = mysql.connector.connect(host="localhost",
+                                      user="root",
+                                      passwd="1234",
+                                      database="businessdb")
+        if (con):
+            cur = con.cursor(prepared=True);
+            pre_qry = "insert into users(name,password,usertype) values(%s,%s,%s)"
+            cur.execute(pre_qry, (inname,inpass,intype))
+            con.commit();
+
+            messagebox.showinfo("Insert info", "Row inserted successfully")
+
+    inswin=Tk()
+    inswin.geometry("400x400+300+200");
+    lbname = Label(inswin, text="Enter user name:");
+    lbpass = Label(inswin, text="Enter user password:")
+    lbtype = Label(inswin, text="Enter user type(admin/user):")
+
+    ename=Entry(inswin);
+    epass = Entry(inswin);
+    etype=Entry(inswin);
+    lbname.grid(row=0, column=0)
+    ename.grid(row=0, column=20)
+    lbpass.grid(row=10, column=0)
+    epass.grid(row=10, column=20)
+    lbtype.grid(row=20, column=0)
+    etype.grid(row=20, column=20)
+
+    btn=Button(inswin,text="insertData",command=insert)
+    btn.grid(row=20,column=30)
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+def aboutfun():
+    inswin=Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+
+
+    inswin.title("About us");
+
+    inswin.geometry("600x400+300+200");
+    titlelbl = Label(inswin, text="Project submitted by:",font="elephant 12");
+    comlbl = Label(inswin, text="Mihika:",font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person:",font="elephant 12")
+    weblbl = Label(inswin, text="Enter website:",font="elephant 12")
+
+    detaillbl = Label(inswin, text="Enter Business Detail:",font="elephant 12")
+
+    titlelbl.grid(row=0, column=1)
+    comlbl.grid(row=1, column=1)
+    personlbl.grid(row=2, column=1)
+    weblbl.grid(row=3, column=1)
+    detaillbl.grid(row=4, column=1)
+
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+def aboutfun():
+    inswin=Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+
+
+    inswin.title("About us");
+
+    inswin.geometry("600x400+300+200");
+    titlelbl = Label(inswin, text="Project submitted by:",font="elephant 12");
+    comlbl = Label(inswin, text="Mihika:",font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person:",font="elephant 12")
+    weblbl = Label(inswin, text="Enter website:",font="elephant 12")
+
+    detaillbl = Label(inswin, text="Enter Business Detail:",font="elephant 12")
+
+    titlelbl.grid(row=0, column=1)
+    comlbl.grid(row=1, column=1)
+    personlbl.grid(row=2, column=1)
+    weblbl.grid(row=3, column=1)
+    detaillbl.grid(row=4, column=1)
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+def aboutfun():
+    inswin=Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+
+
+    inswin.title("About us");
+
+    inswin.geometry("600x400+300+200");
+    titlelbl = Label(inswin, text="Project submitted by:",font="elephant 12");
+    comlbl = Label(inswin, text="Mihika:",font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person:",font="elephant 12")
+    weblbl = Label(inswin, text="Enter website:",font="elephant 12")
+
+    detaillbl = Label(inswin, text="Enter Business Detail:",font="elephant 12")
+
+    titlelbl.grid(row=0, column=1)
+    comlbl.grid(row=1, column=1)
+    personlbl.grid(row=2, column=1)
+    weblbl.grid(row=3, column=1)
+    detaillbl.grid(row=4, column=1)
+
+

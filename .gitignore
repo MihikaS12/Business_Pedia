@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+BusinessPedia/venv/
+BusinessPedia/BusinessPedia/venv/
+
+# IDE files
+.idea/
+BusinessPedia/BusinessPedia/.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if any)
+node_modules/
+
+# Misc
+*.log 

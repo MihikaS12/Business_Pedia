@@ -1,0 +1,27 @@
+from tkinter import*
+import mysql.connector
+from tkinter import messagebox
+def aboutfun():
+    inswin=Tk()
+
+    inswin.iconbitmap("123.ico")
+    inswin.configure(background="light green");
+
+
+
+    inswin.title("About us");
+
+    inswin.geometry("600x400+300+200");
+    titlelbl = Label(inswin, text="Project submitted by:",font="elephant 12");
+    comlbl = Label(inswin, text="Mihika:",font="elephant 12")
+    personlbl = Label(inswin, text="Enter Person:",font="elephant 12")
+    weblbl = Label(inswin, text="Enter website:",font="elephant 12")
+
+    detaillbl = Label(inswin, text="Enter Business Detail:",font="elephant 12")
+
+    titlelbl.grid(row=0, column=1)
+    comlbl.grid(row=1, column=1)
+    personlbl.grid(row=2, column=1)
+    weblbl.grid(row=3, column=1)
+    detaillbl.grid(row=4, column=1)
+
