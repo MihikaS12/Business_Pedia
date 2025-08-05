@@ -4,6 +4,9 @@
 
 
 
+
+
+
 # BusinessPedia 🧠💼
 
 **BusinessPedia** is a simple Python and MySQL-based tool for managing business-related information. It works like a small encyclopedia where users can add, view, update, and delete business data through a terminal interface. The project is especially useful for those just starting out with databases and Python programming.
